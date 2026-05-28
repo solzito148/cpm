@@ -1,0 +1,41 @@
+---
+description: Weekly Cashflow status deck — generate, sync, commit, push
+globs: weekly/**
+alwaysApply: false
+---
+
+# CPM weekly status workflow
+
+Canonical repo: `https://github.com/solzito148/cpm`  
+Work directory: `weekly/`
+
+## When this applies
+
+Any update to the weekly status deck, including:
+
+- `CPM-ProcurementForecasting-Status.xlsx`
+- `generate_cashflow_status_pptx.py`
+- `assets/aes-logo.png`
+- Generated `CASHFLOW_Status_*.pptx`
+
+## Required steps after changes
+
+1. If Excel or generator changed, regenerate:
+   ```bash
+   cd weekly && python3 generate_cashflow_status_pptx.py
+   ```
+2. If edits were made outside this repo (e.g. `aes/cashflow/weekly/`), copy into `cpm/weekly/` first.
+3. **Always commit** relevant changes to `main` when the weekly status task is complete (user expects this without asking again).
+4. Push to `origin main` as `solzito148` (see `github-account` rule).
+
+## Commit message
+
+One short sentence focused on **why** (e.g. "Update weekly status deck for May 29 with paginated tables and AES logo").
+
+Include: `.xlsx` source, generator script, logo asset, and new/updated `.pptx` when present. Do not commit secrets.
+
+## Deck conventions
+
+- Tables: max **10 rows per slide**, title suffix `(page/total)` when paginated.
+- AES logo on **first** and **last** slide (`assets/aes-logo.png`).
+- Report date: edit `report_date` in `generate_cashflow_status_pptx.py` → `main()`.

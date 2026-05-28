@@ -1,0 +1,22 @@
+---
+description: GitHub account for git/gh in solzito148/cpm
+alwaysApply: true
+---
+
+# GitHub account: always `solzito148`
+
+In this repository (`cpm`), **always use the `solzito148` GitHub account** for git and `gh`. Never push as `msanes_meli`.
+
+## Before push
+
+```bash
+gh auth status | grep -A1 'solzito148' | grep 'Active account: true'
+```
+
+If inactive: `gh auth switch --user solzito148`
+
+## Remote
+
+- Origin: `https://github.com/solzito148/cpm.git`
+- Prefer HTTPS push (SSH may still use `msanes_meli` on this machine).
+- If SSH push fails with "Permission denied to msanes_meli", retry with HTTPS origin or `git push https://github.com/solzito148/cpm.git main`.
