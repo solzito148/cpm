@@ -1,0 +1,30 @@
+README.md
+  s_0c1ff9ae5a7224::t_dcd0f3fc9e047a 14-15
+weekly/generate_cashflow_status_pptx.py
+  s_0c1ff9ae5a7224::t_59878fd5b65cd1 296-298
+  s_0c1ff9ae5a7224::t_589e7d66568371 828,830-831
+.cursor/rules/cpm-weekly-status.mdc
+  s_0c1ff9ae5a7224::t_48a6782fdecea5 19
+  s_0c1ff9ae5a7224::t_5c32b33db5e3cc 35
+  s_0c1ff9ae5a7224::t_7b3b27bad9022d 27
+.gitignore
+  s_0c1ff9ae5a7224::t_5963476ba78477 4
+AGENTS.md
+  s_0c1ff9ae5a7224::t_551cb4e50602b3 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "2afbfa6219e77003d1856170a4cba44ce42ebced",
+  "prompts": {},
+  "sessions": {
+    "s_0c1ff9ae5a7224": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e3748857-ea9f-4a1b-8962-02cd8da6b60c",
+        "model": "composer-2.5"
+      },
+      "human_author": "solzito148 <solzito@gmail.com>"
+    }
+  }
+}
