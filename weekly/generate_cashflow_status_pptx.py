@@ -293,7 +293,9 @@ def set_header_title(slide, title):
     )
 
 
-LOGO_PATH = Path(__file__).resolve().parent / "assets" / "aes-logo.png"
+DATA_DIR = Path(__file__).resolve().parent
+LOGO_PATH = DATA_DIR / "assets" / "aes-logo.png"
+OUTPUT_DIR = Path("/Users/msanes/Cursor/aes/cashflow/weekly")
 
 
 def add_aes_logo(slide, left=Inches(8.15), top=Inches(6.05), width=Inches(3.0)):
@@ -823,10 +825,10 @@ def build_presentation(tasks: list[dict], report_date: date, output_path: Path) 
 
 
 def main():
-    base = Path(__file__).resolve().parent
-    xlsx_path = base / "CPM-ProcurementForecasting-Status.xlsx"
+    xlsx_path = DATA_DIR / "CPM-ProcurementForecasting-Status.xlsx"
     report_date = date(2026, 5, 29)
-    output_path = base / f"CASHFLOW_Status_{report_date.strftime('%Y%m%d')}.pptx"
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    output_path = OUTPUT_DIR / f"CASHFLOW_Status_{report_date.strftime('%Y%m%d')}.pptx"
 
     tasks = load_tasks(xlsx_path)
     build_presentation(tasks, report_date, output_path)

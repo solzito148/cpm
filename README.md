@@ -11,7 +11,8 @@ Source data and generator live under `weekly/`:
 | `CPM-ProcurementForecasting-Status.xlsx` | Backlog export (sheet `Backlog`) |
 | `generate_cashflow_status_pptx.py` | Builds the status PowerPoint |
 | `assets/aes-logo.png` | AES logo for title and closing slides |
-| `CASHFLOW_Status_YYYYMMDD.pptx` | Generated decks |
+
+Generated decks are written to **`/Users/msanes/Cursor/aes/cashflow/weekly/CASHFLOW_Status_YYYYMMDD.pptx`** (not in this repo).
 
 ### Regenerate
 

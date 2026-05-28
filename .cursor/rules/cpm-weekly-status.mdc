@@ -16,7 +16,7 @@ Any update to the weekly status deck, including:
 - `CPM-ProcurementForecasting-Status.xlsx`
 - `generate_cashflow_status_pptx.py`
 - `assets/aes-logo.png`
-- Generated `CASHFLOW_Status_*.pptx`
+- Generated deck (written to `/Users/msanes/Cursor/aes/cashflow/weekly/CASHFLOW_Status_*.pptx`, not under `cpm/weekly/`)
 
 ## Required steps after changes
 
@@ -24,7 +24,7 @@ Any update to the weekly status deck, including:
    ```bash
    cd weekly && python3 generate_cashflow_status_pptx.py
    ```
-2. If edits were made outside this repo (e.g. `aes/cashflow/weekly/`), copy into `cpm/weekly/` first.
+2. Source data stays in `cpm/weekly/`; the `.pptx` is always saved under `/Users/msanes/Cursor/aes/cashflow/weekly/`.
 3. **Always commit** relevant changes to `main` when the weekly status task is complete (user expects this without asking again).
 4. Push to `origin main` as `solzito148` (see `github-account` rule).
 
@@ -32,7 +32,7 @@ Any update to the weekly status deck, including:
 
 One short sentence focused on **why** (e.g. "Update weekly status deck for May 29 with paginated tables and AES logo").
 
-Include: `.xlsx` source, generator script, logo asset, and new/updated `.pptx` when present. Do not commit secrets.
+Include: `.xlsx` source, generator script, and logo asset. Do not commit generated `.pptx` (output lives under `aes/cashflow/weekly/`). Do not commit secrets.
 
 ## Deck conventions
 
