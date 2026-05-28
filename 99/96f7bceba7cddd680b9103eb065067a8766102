@@ -1,0 +1,26 @@
+weekly/generate_cashflow_status_pptx.py
+  s_0c1ff9ae5a7224::t_9a456d8781ec68 795
+  s_0c1ff9ae5a7224::t_3d611d52961eff 768
+  s_0c1ff9ae5a7224::t_ab77b3ad92b212 474-598
+  s_0c1ff9ae5a7224::t_d94ddb444ef5ce 742
+  s_0c1ff9ae5a7224::t_9e41694dc81992 714-717
+  s_0c1ff9ae5a7224::t_6a404c9f9d923d 751
+  s_0c1ff9ae5a7224::t_d1f0a225e42fe8 941
+  s_0c1ff9ae5a7224::t_fdc92c8062715e 833
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "9996f7bceba7cddd680b9103eb065067a8766102",
+  "prompts": {},
+  "sessions": {
+    "s_0c1ff9ae5a7224": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e3748857-ea9f-4a1b-8962-02cd8da6b60c",
+        "model": "composer-2.5"
+      },
+      "human_author": "solzito148 <solzito@gmail.com>"
+    }
+  }
+}
