@@ -1,0 +1,21 @@
+README.md
+  s_0c1ff9ae5a7224::t_d56a305eba2e6c 2-29
+.gitignore
+  s_0c1ff9ae5a7224::t_1f79e5874940d7 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "879ed536485f84f9a5a15a10423f47aee8b226a8",
+  "prompts": {},
+  "sessions": {
+    "s_0c1ff9ae5a7224": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e3748857-ea9f-4a1b-8962-02cd8da6b60c",
+        "model": "composer-2.5"
+      },
+      "human_author": "solzito148 <solzito@gmail.com>"
+    }
+  }
+}
