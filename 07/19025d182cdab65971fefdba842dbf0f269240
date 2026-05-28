@@ -1,0 +1,23 @@
+.cursor/rules/cpm-weekly-status.mdc
+  s_0c1ff9ae5a7224::t_760b03d61003cd 1-41
+AGENTS.md
+  s_0c1ff9ae5a7224::t_11982a17582f23 1-16
+.cursor/rules/github-account.mdc
+  s_0c1ff9ae5a7224::t_59b46023646606 1-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "0719025d182cdab65971fefdba842dbf0f269240",
+  "prompts": {},
+  "sessions": {
+    "s_0c1ff9ae5a7224": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e3748857-ea9f-4a1b-8962-02cd8da6b60c",
+        "model": "composer-2.5"
+      },
+      "human_author": "solzito148 <solzito@gmail.com>"
+    }
+  }
+}
