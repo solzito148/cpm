@@ -471,6 +471,131 @@ def chunk(items, size):
 
 ROWS_PER_TABLE_PAGE = 10
 
+FORTY_FIVE_DAY_CODES = frozenset(
+    {
+        "SCI-01",
+        "SCI-02",
+        "SCI-03",
+        "SCI-04",
+        "SCI-06",
+        "SCI-07",
+        "SCI-09",
+        "SCI-20",
+        "SCI-22",
+    }
+)
+
+STATUS_BG = {
+    "Done": RGBColor(0xC6, 0xEF, 0xCE),
+    "Ready to move to RPC": RGBColor(0xFF, 0xE0, 0xB2),
+}
+DEPLOY_BG = RGBColor(0xC6, 0xEF, 0xCE)
+
+MILESTONE_COLS = [
+    ("Type", Inches(0.52)),
+    ("RITM / INC", Inches(1.08)),
+    ("ID", Inches(0.32)),
+    ("JIRA", Inches(0.52)),
+    ("Task name", Inches(3.55)),
+    ("Status", Inches(1.02)),
+    ("Assigned", Inches(0.78)),
+    ("Requestor", Inches(0.78)),
+    ("P", Inches(0.26)),
+    ("Due", Inches(0.48)),
+    ("Initial", Inches(0.48)),
+    ("Deploy", Inches(0.48)),
+    ("CHG", Inches(0.88)),
+]
+
+
+def milestone_rows(tasks: list[dict]) -> list[list[str]]:
+    selected = [t for t in tasks if t["code"] in FORTY_FIVE_DAY_CODES]
+    selected.sort(key=lambda t: sci_sort_key(t["code"]))
+    return [
+        [
+            t["type"],
+            truncate_words(t["ritm"], 42),
+            t["id"] if t["id"] != "-" else "",
+            t["code"],
+            t["name"],
+            t["status"],
+            t["assigned"],
+            t["requestor"] if t["requestor"] != "-" else "",
+            t["priority"] if t["priority"] != "-" else "",
+            t["due"],
+            t["initial"] if t["initial"] not in ("TBD", "-", "") else "",
+            t["deployment"] if t["deployment"] not in ("TBD", "-", "") else "",
+            t["change_request"] if t["change_request"] != "-" else "",
+        ]
+        for t in selected
+    ]
+
+
+def create_forty_five_days_slide(slide, rows: list[list[str]]) -> None:
+    add_bg(slide, BG_LIGHT)
+    add_header_bar(slide)
+    set_header_title(slide, "WHAT WE DID IN 45 DAYS :D")
+
+    n_cols = len(MILESTONE_COLS)
+    n_rows = len(rows) + 1
+    row_height = Inches(0.52)
+    tbl_left = CONTENT_LEFT
+    tbl_top = TABLE_TOP
+    tbl_w = sum(width for _, width in MILESTONE_COLS)
+    tbl_h = row_height * n_rows
+
+    table_shape = slide.shapes.add_table(n_rows, n_cols, tbl_left, tbl_top, tbl_w, tbl_h)
+    table = table_shape.table
+
+    for ci, (_, width) in enumerate(MILESTONE_COLS):
+        table.columns[ci].width = width
+
+    for ci, (header, _) in enumerate(MILESTONE_COLS):
+        cell = table.cell(0, ci)
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = NAVY
+        set_cell_text(cell, header, font_size=8, bold=True, color=WHITE)
+
+    for ri, row in enumerate(rows):
+        for ci, val in enumerate(row):
+            cell = table.cell(ri + 1, ci)
+            header = MILESTONE_COLS[ci][0]
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = WHITE
+            color = TEXT_PRI
+            bold = False
+            align = PP_ALIGN.LEFT
+            font_size = 7
+
+            if header == "JIRA":
+                color = CYAN
+                bold = True
+            elif header == "Status":
+                bold = True
+                color = STATUS_COLORS.get(str(val), TEXT_PRI)
+                bg = STATUS_BG.get(str(val))
+                if bg is not None:
+                    cell.fill.fore_color.rgb = bg
+            elif header == "P" and str(val) == "1":
+                color = RED
+                bold = True
+                align = PP_ALIGN.CENTER
+            elif header in ("Due", "Initial", "Deploy") and str(val) not in ("", "-", "TBD"):
+                align = PP_ALIGN.CENTER
+                if header == "Deploy":
+                    cell.fill.fore_color.rgb = DEPLOY_BG
+            elif header == "ID" and str(val):
+                align = PP_ALIGN.CENTER
+
+            set_cell_text(
+                cell,
+                val,
+                font_size=font_size,
+                bold=bold,
+                color=color,
+                align=align,
+            )
+
 
 def table_page_suffix(page_idx: int, total_pages: int) -> str:
     return f" ({page_idx}/{total_pages})" if total_pages > 1 else ""
@@ -586,6 +711,10 @@ def build_presentation(tasks: list[dict], report_date: date, output_path: Path) 
         line_spacing=1.25,
     )
 
+    # Slide 3 — What we did in 45 days (milestone tickets)
+    slide3 = prs.slides.add_slide(blank)
+    create_forty_five_days_slide(slide3, milestone_rows(tasks))
+
     detail_cols = [
         ("SCI", Inches(0.72)),
         ("Task", Inches(4.85)),
@@ -610,7 +739,7 @@ def build_presentation(tasks: list[dict], report_date: date, output_path: Path) 
             for t in task_list
         ]
 
-    # Slide 3 — Ready to move to RPC
+    # Slide 4 — Ready to move to RPC
     add_paginated_table_slides(
         prs,
         blank,
@@ -619,7 +748,7 @@ def build_presentation(tasks: list[dict], report_date: date, output_path: Path) 
         detail_cols,
     )
 
-    # Slide 4 — In Progress / Analysis / Development (cards)
+    # Slide 5 — In Progress / Analysis / Development (cards)
     card_row_h = Inches(1.72)
     card_gap_y = Inches(0.12)
     for page_idx, page_tasks in enumerate(chunk(active, 8), start=1):
@@ -636,7 +765,7 @@ def build_presentation(tasks: list[dict], report_date: date, output_path: Path) 
             accent = BLUE if task["status"] != "In analysis" else CYAN
             detail_card(slide4, x, y, task, accent)
 
-    # Slide 5 — To Do
+    # Slide 6 — To Do
     todo_cols = [
         ("SCI", Inches(0.72)),
         ("Task", Inches(5.35)),
@@ -663,7 +792,7 @@ def build_presentation(tasks: list[dict], report_date: date, output_path: Path) 
         row_height=Inches(0.42),
     )
 
-    # Slide 6 — all tasks by status
+    # Slide 7 — all tasks by status
     tracker_cols = [
         ("SCI", Inches(0.72)),
         ("Description", Inches(4.35)),
@@ -701,7 +830,7 @@ def build_presentation(tasks: list[dict], report_date: date, output_path: Path) 
         tracker_cols,
     )
 
-    # Slide 7 — prioritization
+    # Slide 8 — prioritization
     slide7 = prs.slides.add_slide(blank)
     add_bg(slide7, BG_LIGHT)
     add_header_bar(slide7)
@@ -809,7 +938,7 @@ def build_presentation(tasks: list[dict], report_date: date, output_path: Path) 
                 bold = True
             set_cell_text(cell, val, font_size=8, bold=bold, color=color)
 
-    # Slide 8 — thanks
+    # Slide 9 — thanks
     slide8 = prs.slides.add_slide(blank)
     add_bg(slide8, WHITE)
     add_rect(slide8, Inches(0), Inches(0), Inches(0.08), SLIDE_H, CYAN)
